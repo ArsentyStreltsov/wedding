@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save the Date</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=BBH+Bartle&family=BBH+Hegarty&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-button {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .play-button:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .play-button.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+
+        .play-button svg {
+            width: 40px;
+            height: 40px;
+            fill: #333;
+            margin-left: 5px;
+        }
+
+        .sound-toggle {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 25;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .sound-toggle:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .sound-toggle svg {
+            width: 20px;
+            height: 20px;
+            fill: #000;
+            stroke: #000;
+            stroke-width: 1;
+        }
+
+        .sound-toggle.muted svg {
+            opacity: 0.5;
+        }
+
+        .pause-toggle {
+            position: fixed;
+            top: 30px;
+            left: 90px;
+            z-index: 25;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .pause-toggle:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .pause-toggle svg {
+            width: 20px;
+            height: 20px;
+            fill: #000;
+            stroke: #000;
+            stroke-width: 1;
+        }
+
+        .test-skip-button {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 10;
+            padding: 12px 24px;
+            background: rgba(255, 0, 0, 0.7);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .test-skip-button:hover {
+            background: rgba(255, 0, 0, 0.9);
+            transform: scale(1.05);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 15;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+        }
+
+        .modal-overlay.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-sidebar {
+            position: fixed;
+            top: 0;
+            right: -500px;
+            width: 450px;
+            max-width: 90vw;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(230, 240, 255, 0.98) 0%, rgba(200, 220, 245, 0.98) 100%);
+            backdrop-filter: blur(20px);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+            z-index: 20;
+            overflow-y: auto;
+            transition: right 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 60px 40px 40px;
+        }
+
+        .modal-sidebar.visible {
+            right: 0;
+        }
+
+        .modal-close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(26, 26, 46, 0.1);
+            border: 2px solid rgba(26, 26, 46, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 21;
+        }
+
+        .modal-close-button:hover {
+            background: rgba(26, 26, 46, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-close-button svg {
+            width: 20px;
+            height: 20px;
+            fill: #1a1a2e;
+        }
+
+        .modal-toggle-button {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 16;
+            width: 50px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .modal-toggle-button.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-toggle-button:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-toggle-button svg {
+            width: 24px;
+            height: 24px;
+            fill: #000;
+        }
+
+        .modal-toggle-button.closed svg {
+            transform: rotate(180deg);
+        }
+
+        .text-block {
+            color: #1a1a2e;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 1s ease-in-out;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+
+        .text-block.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .bbh-bartle-regular {
+            font-family: "BBH Bartle", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .bbh-hegarty-regular {
+            font-family: "BBH Hegarty", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            line-height: 1.3;
+            color: #1a1a2e;
+        }
+
+        h1.font-bartle {
+            font-family: "BBH Bartle", sans-serif;
+        }
+
+        h1.font-hegarty {
+            font-family: "BBH Hegarty", sans-serif;
+        }
+
+        h2 {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 0;
+            line-height: 1.6;
+            color: #2d2d44;
+        }
+
+        .telegram-button {
+            display: block;
+            margin: 20px auto 0;
+            padding: 16px 45px;
+            background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            box-shadow: 0 8px 25px rgba(0, 136, 204, 0.4);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            font-family: 'Quicksand', sans-serif;
+            text-align: center;
+            width: fit-content;
+        }
+
+        .telegram-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 136, 204, 0.5);
+            background: linear-gradient(135deg, #0099dd 0%, #0077aa 100%);
+        }
+
+        @media (max-width: 768px) {
+            .modal-sidebar {
+                width: 100%;
+                max-width: 100vw;
+                right: -100%;
+            }
+
+            .play-button {
+                width: 80px;
+                height: 80px;
+            }
+
+            .play-button svg {
+                width: 30px;
+                height: 30px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.1rem;
+            }
+
+            .modal-sidebar {
+                padding: 50px 25px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video id="backgroundVideo" playsinline>
+            <source src="https://pub-ba3c79b5eb52452c9d2b9723b757d8d3.r2.dev/6e3.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <button class="play-button" id="playButton" aria-label="Воспроизвести видео">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 5v14l11-7z"/>
+        </svg>
+    </button>
+
+    <button class="sound-toggle muted" id="soundToggle" aria-label="Переключить звук" style="display: none;">
+        <svg id="soundIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+        <svg id="mutedIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+        </svg>
+    </button>
+
+    <button class="pause-toggle" id="pauseToggle" aria-label="Пауза/Воспроизведение" style="display: none;">
+        <svg id="pauseIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+        </svg>
+        <svg id="playIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <path d="M8 5v14l11-7z"/>
+        </svg>
+    </button>
+
+    <button class="test-skip-button" id="testSkipButton" style="display: none;">⏩ Тест: 50 сек</button>
+
+    <div class="modal-overlay" id="modalOverlay"></div>
+
+    <button class="modal-toggle-button" id="modalToggleButton" aria-label="Открыть информацию">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        </svg>
+    </button>
+
+    <div class="modal-sidebar" id="modalSidebar">
+        <button class="modal-close-button" id="modalCloseButton" aria-label="Закрыть">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+        </button>
+        <div id="text1" class="text-block">
+            <h1 class="font-hegarty">Save the date</h1>
+            <h2>или по-другому, мы женимся!</h2>
+        </div>
+        <div id="text2" class="text-block">
+            <h2>Будем вас ждать в ЗАГСе №4</h2>
+            <h2>по адресу <a href="https://yandex.ru/maps/-/CLT5yVyW" target="_blank" rel="noopener noreferrer" style="color: #0088cc; text-decoration: underline;">Бутырская улица, 17</a></h2>
+            <h2>в 10:45</h2>
+        </div>
+        <div id="text3" class="text-block">
+            <h2>Сохраните для нас весь день, ведь после этого мы все вместе поедем в ресторан!</h2>
+            <h2>Мы еще не определились со всеми деталями, но придумали, как будем держать связь! Переходите в наш свадебный телеграмм-бот, где будет публиковаться вся дополнительная информация</h2>
+            <a href="#" class="telegram-button" id="tgButton" target="_blank" rel="noopener noreferrer">Перейти в бота</a>
+        </div>
+    </div>
+
+    <script>
+        // Замените на реальную ссылку на вашего Telegram бота
+        document.getElementById('tgButton').href = 'https://t.me/your_bot_username';
+
+        const video = document.getElementById('backgroundVideo');
+        const playButton = document.getElementById('playButton');
+        const soundToggle = document.getElementById('soundToggle');
+        const soundIcon = document.getElementById('soundIcon');
+        const mutedIcon = document.getElementById('mutedIcon');
+        const pauseToggle = document.getElementById('pauseToggle');
+        const pauseIcon = document.getElementById('pauseIcon');
+        const playIcon = document.getElementById('playIcon');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalSidebar = document.getElementById('modalSidebar');
+        const modalToggleButton = document.getElementById('modalToggleButton');
+        const modalCloseButton = document.getElementById('modalCloseButton');
+        const testSkipButton = document.getElementById('testSkipButton');
+
+        const text1 = document.getElementById('text1');
+        const text2 = document.getElementById('text2');
+        const text3 = document.getElementById('text3');
+
+        let videoPlayedOnce = false;
+        let isModalOpen = false;
+        let modalShown = false;
+        let modalClosedOnce = false;
+
+        // Функция показа текста в модальном окне
+        function showText(element, delay) {
+            setTimeout(() => {
+                element.classList.add('visible');
+            }, delay);
+        }
+
+        // Запуск видео при нажатии на кнопку Play
+        playButton.addEventListener('click', function() {
+            video.muted = false;
+            video.play();
+            playButton.classList.add('hidden');
+            soundToggle.style.display = 'flex';
+            pauseToggle.style.display = 'flex';
+            testSkipButton.style.display = 'block';
+            soundIcon.style.display = 'block';
+            mutedIcon.style.display = 'none';
+            soundToggle.classList.remove('muted');
+        });
+
+        // Переключение паузы/воспроизведения
+        pauseToggle.addEventListener('click', function() {
+            if (video.paused) {
+                video.play();
+                pauseIcon.style.display = 'block';
+                playIcon.style.display = 'none';
+            } else {
+                video.pause();
+                pauseIcon.style.display = 'none';
+                playIcon.style.display = 'block';
+            }
+        });
+
+        // Проверка времени видео для показа модального окна на 55.5 секунде
+        video.addEventListener('timeupdate', function() {
+            if (video.currentTime >= 55.5 && !modalShown) {
+                modalShown = true;
+                // Включаем цикл после первого просмотра
+                if (!videoPlayedOnce) {
+                    videoPlayedOnce = true;
+                    video.loop = true;
+                }
+                // Показываем модальное окно
+                setTimeout(() => {
+                    openModal();
+                    showText(text1, 100);
+                    showText(text2, 500);
+                    showText(text3, 900);
+                }, 500);
+            }
+        });
+
+        // Обработка окончания первого просмотра видео (для включения loop)
+        video.addEventListener('ended', function() {
+            if (!videoPlayedOnce) {
+                videoPlayedOnce = true;
+                video.loop = true;
+                video.play();
+            }
+        });
+
+        // Переключение звука
+        soundToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (video.muted) {
+                video.muted = false;
+                soundIcon.style.display = 'block';
+                mutedIcon.style.display = 'none';
+                soundToggle.classList.remove('muted');
+            } else {
+                video.muted = true;
+                soundIcon.style.display = 'none';
+                mutedIcon.style.display = 'block';
+                soundToggle.classList.add('muted');
+            }
+        });
+
+        // Открытие модального окна
+        function openModal() {
+            isModalOpen = true;
+            modalSidebar.classList.add('visible');
+            modalOverlay.classList.add('visible');
+            modalToggleButton.classList.add('closed');
+        }
+
+        // Закрытие модального окна
+        function closeModal() {
+            isModalOpen = false;
+            modalSidebar.classList.remove('visible');
+            modalOverlay.classList.remove('visible');
+            modalToggleButton.classList.remove('closed');
+            
+            // Показываем кнопку переключения после первого закрытия
+            if (!modalClosedOnce) {
+                modalClosedOnce = true;
+                setTimeout(() => {
+                    modalToggleButton.classList.add('visible');
+                }, 300);
+            }
+        }
+
+        // Переключение модального окна
+        modalToggleButton.addEventListener('click', function() {
+            if (isModalOpen) {
+                closeModal();
+            } else {
+                openModal();
+            }
+        });
+
+        // Закрытие по кнопке внутри модального окна
+        modalCloseButton.addEventListener('click', function() {
+            closeModal();
+        });
+
+        // Закрытие по клику на overlay
+        modalOverlay.addEventListener('click', function() {
+            closeModal();
+        });
+
+        // Тестовая кнопка для перемотки на 53 секунду
+        testSkipButton.addEventListener('click', function() {
+            video.currentTime = 53;
+            if (video.paused) {
+                video.play();
+            }
+        });
+
+        // Обновление иконки паузы при изменении состояния видео
+        video.addEventListener('play', function() {
+            pauseIcon.style.display = 'block';
+            playIcon.style.display = 'none';
+        });
+
+        video.addEventListener('pause', function() {
+            pauseIcon.style.display = 'none';
+            playIcon.style.display = 'block';
+        });
+
+        // Обработка ошибок загрузки видео
+        video.addEventListener('error', function(e) {
+            console.error('Ошибка загрузки видео:', e);
+        });
+    </script>
+</body>
+</html>

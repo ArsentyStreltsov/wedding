@@ -268,13 +268,16 @@
             opacity: 0;
             transform: translateX(-30px);
             transition: all 1s ease-in-out;
-            margin-bottom: 40px;
             width: 100%;
         }
 
         .text-block.visible {
             opacity: 1;
             transform: translateX(0);
+        }
+
+        .text-block:last-child {
+            margin-bottom: 0;
         }
 
         .bbh-bartle-regular {
@@ -316,21 +319,18 @@
             color: #2d2d44;
         }
 
-        #text3 h2:nth-child(2) {
-            margin-top: 40px;
-        }
 
         .telegram-button {
             display: block;
             margin: 20px auto 0;
             padding: 16px 45px;
-            background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+            background: linear-gradient(135deg, #3AB5AD 0%, #2FA39C 100%);
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-size: 1.1rem;
             font-weight: 500;
-            box-shadow: 0 8px 25px rgba(0, 136, 204, 0.4);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
             transition: all 0.3s ease;
             letter-spacing: 1px;
             font-family: 'Quicksand', sans-serif;
@@ -340,8 +340,8 @@
 
         .telegram-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(0, 136, 204, 0.5);
-            background: linear-gradient(135deg, #0099dd 0%, #0077aa 100%);
+            box-shadow: 0 12px 35px rgba(78, 205, 196, 0.5);
+            background: linear-gradient(135deg, #4ECDC4 0%, #44B3AC 100%);
         }
 
         @media (max-width: 768px) {
@@ -505,7 +505,7 @@
                 font-size: 1.2rem;
                 font-weight: 500;
                 letter-spacing: 1px;
-                margin-bottom: 20px;
+
                 line-height: 1.6;
                 color: #2d2d44;
             }
@@ -520,7 +520,7 @@
                 width: fit-content;
                 text-align: center;
                 padding: 15px 30px;
-                background: #0088cc;
+                background: linear-gradient(135deg, #3AB5AD 0%, #2FA39C 100%);
                 color: white;
                 text-decoration: none;
                 border-radius: 25px;
@@ -528,13 +528,13 @@
                 font-weight: 600;
                 font-size: 1.1rem;
                 transition: all 0.3s ease;
-                box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+                box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
             }
 
             .mobile-telegram-button:hover {
-                background: #006ba3;
+                background: linear-gradient(135deg, #4ECDC4 0%, #44B3AC 100%);
                 transform: translateY(-2px);
-                box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4);
+                box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
             }
         }
 
@@ -740,10 +740,12 @@
         </div>
         <div class="mobile-content">
             <div class="mobile-text-block">
-                <h2>Будем вас ждать в ЗАГСе №4 по адресу <a href="https://yandex.ru/maps/-/CLT5yVyW" target="_blank" rel="noopener noreferrer" style="color: #0088cc; text-decoration: underline;">Бутырская улица, 17</a> в 10:45</h2>
-                <h2>Сохраните для нас весь день, ведь после этого мы все вместе поедем в ресторан!</h2>
-                <h2>Мы еще не определились со всеми деталями, но придумали, как будем держать связь! Переходите в наш свадебный телеграмм-бот, где будет публиковаться вся дополнительная информация</h2>
-                <a href="#" class="telegram-button mobile-telegram-button" id="mobileTgButton" target="_blank" rel="noopener noreferrer">Перейти в бота</a>
+                <h2>Приглашаем вас на нашу свадьбу! Для нас это очень трепетный и важный день, поэтому мы бы хотели разделить его с самыми близкими и любимыми ♥️</h2><br>
+                <h2>Дата: <strong>16 мая 2026</strong><br>Адрес: <strong>Загс №4</strong> (<a href="https://yandex.ru/maps/-/CLT5yVyW" target="_blank" rel="noopener noreferrer" style="color: #2FA39C; text-decoration: underline; font-weight: bold;">Москва, Бутырская улица, 17</a>)</h2><br>
+                <h2>Сохраните для нас весь день, так как праздник обещает быть долгим и запоминающимся!</h2><br>
+                <h2>Мы еще не определились со всеми деталями, но придумали, как будем держать связь. Совсем скоро мы опубликуем наш свадебный телеграмм-бот, где будем делиться всей дополнительной информацией и вышлем вам ссылку для регистрации!</h2><br>
+                <h2>До скорой встречи,<br>Арсентий Стрельцов и Дарья Шелегова (пока)</h2>
+                <!-- <a href="#" class="telegram-button mobile-telegram-button" id="mobileTgButton" target="_blank" rel="noopener noreferrer">Перейти в бота</a> -->
             </div>
         </div>
     </div>
@@ -754,24 +756,35 @@
                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
             </svg>
         </button>
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1 class="font-hegarty" style="font-size: 2.5rem; color: #1a1a2e; margin: 0 0 10px 0;">Save the Date!</h1>
+            <h2 style="font-family: 'Quicksand', sans-serif; font-size: 1.3rem; font-weight: 500; letter-spacing: 1px; color: #2d2d44; margin: 0;">или по-другому, мы женимся!</h2>
+        </div>
         <div id="text1" class="text-block">
-            <h1 class="font-hegarty">Save the Date</h1>
-            <h2>или по-другому, мы женимся!</h2>
+            <h2>Приглашаем вас на нашу свадьбу! Для нас это очень трепетный и важный день, поэтому мы бы хотели разделить его с самыми близкими и любимыми ♥️</h2><br>
         </div>
         <div id="text2" class="text-block">
-            <h2>Будем вас ждать в ЗАГСе №4 по адресу <a href="https://yandex.ru/maps/-/CLT5yVyW" target="_blank" rel="noopener noreferrer" style="color: #0088cc; text-decoration: underline;">Бутырская улица, 17</a> в 10:45</h2>
+            <h2>Дата: <strong>16 мая 2026</strong><br>Адрес: <strong>Загс №4</strong> (<a href="https://yandex.ru/maps/-/CLT5yVyW" target="_blank" rel="noopener noreferrer" style="color: #2FA39C; text-decoration: underline; font-weight: bold;">Москва, Бутырская улица, 17</a>)</h2><br>
         </div>
         <div id="text3" class="text-block">
-            <h2>Сохраните для нас весь день, ведь после этого мы все вместе поедем в ресторан!</h2>
-            <h2>Мы еще не определились со всеми деталями, но придумали, как будем держать связь! Переходите в наш свадебный телеграмм-бот, где будет публиковаться вся дополнительная информация</h2>
-            <a href="#" class="telegram-button" id="tgButton" target="_blank" rel="noopener noreferrer">Перейти в бота</a>
+            <h2>Сохраните для нас весь день, так как праздник обещает быть долгим и запоминающимся!</h2><br>
+            <h2>Мы еще не определились со всеми деталями, но придумали, как будем держать связь. Совсем скоро мы опубликуем наш свадебный телеграмм-бот, где будем делиться всей дополнительной информацией и вышлем вам ссылку для регистрации!</h2><br>
+            <h2>До скорой встречи,<br>Арсентий Стрельцов и Дарья Шелегова (пока)</h2>
+            <!-- <a href="#" class="telegram-button" id="tgButton" target="_blank" rel="noopener noreferrer">Перейти в бота</a> -->
         </div>
     </div>
 
     <script>
         // Замените на реальную ссылку на вашего Telegram бота
-        document.getElementById('tgButton').href = 'https://t.me/thebestwedding_bot';
-        document.getElementById('mobileTgButton').href = 'https://t.me/thebestwedding_bot';
+        const tgButton = document.getElementById('tgButton');
+        const mobileTgButton = document.getElementById('mobileTgButton');
+        
+        if (tgButton) {
+            tgButton.href = 'https://t.me/thebestwedding_bot';
+        }
+        if (mobileTgButton) {
+            mobileTgButton.href = 'https://t.me/thebestwedding_bot';
+        }
 
         const video = document.getElementById('backgroundVideo');
         const playButton = document.getElementById('playButton');
@@ -808,17 +821,19 @@
             }, delay);
         }
 
-        // Запуск видео при нажатии на кнопку Play
-        playButton.addEventListener('click', function() {
-            video.muted = false;
-            video.play();
-            playButton.classList.add('hidden');
-            soundToggle.style.display = 'flex';
-            pauseToggle.style.display = 'flex';
-            soundIcon.style.display = 'block';
-            mutedIcon.style.display = 'none';
-            soundToggle.classList.remove('muted');
-        });
+        // Запуск видео при нажатии на кнопку Play (только для десктопной версии)
+        if (playButton && video && soundToggle && pauseToggle && soundIcon && mutedIcon) {
+            playButton.addEventListener('click', function() {
+                video.muted = false;
+                video.play();
+                playButton.classList.add('hidden');
+                soundToggle.style.display = 'flex';
+                pauseToggle.style.display = 'flex';
+                soundIcon.style.display = 'block';
+                mutedIcon.style.display = 'none';
+                soundToggle.classList.remove('muted');
+            });
+        }
 
         // Мобильная версия - запуск видео
         const mobileVideo = document.getElementById('mobileVideo');
@@ -847,138 +862,157 @@
             });
         }
 
-        // Переключение паузы/воспроизведения
-        pauseToggle.addEventListener('click', function() {
-            const currentTime = Date.now();
-            
-            // Проверяем, не прошло ли слишком много времени с последнего клика
-            if (currentTime - lastPauseClickTime > PAUSE_CLICK_TIMEOUT) {
-                pauseClickCount = 0; // Сбрасываем счетчик
-            }
-            
-            lastPauseClickTime = currentTime;
-            pauseClickCount++;
-            
-            // Если нажали 7 раз подряд - перематываем на 50 секунду
-            if (pauseClickCount >= REQUIRED_CLICKS) {
-                video.currentTime = 50;
-                pauseClickCount = 0; // Сбрасываем счетчик после активации
-            }
-            
-            if (video.paused) {
-                video.play();
-                pauseIcon.style.display = 'block';
-                playIcon.style.display = 'none';
-            } else {
-                video.pause();
-                pauseIcon.style.display = 'none';
-                playIcon.style.display = 'block';
-            }
-        });
+        // Переключение паузы/воспроизведения (только для десктопной версии)
+        if (pauseToggle && video && pauseIcon && playIcon) {
+            pauseToggle.addEventListener('click', function() {
+                const currentTime = Date.now();
+                
+                // Проверяем, не прошло ли слишком много времени с последнего клика
+                if (currentTime - lastPauseClickTime > PAUSE_CLICK_TIMEOUT) {
+                    pauseClickCount = 0; // Сбрасываем счетчик
+                }
+                
+                lastPauseClickTime = currentTime;
+                pauseClickCount++;
+                
+                // Если нажали 7 раз подряд - перематываем на 50 секунду
+                if (pauseClickCount >= REQUIRED_CLICKS) {
+                    video.currentTime = 50;
+                    pauseClickCount = 0; // Сбрасываем счетчик после активации
+                }
+                
+                if (video.paused) {
+                    video.play();
+                    pauseIcon.style.display = 'block';
+                    playIcon.style.display = 'none';
+                } else {
+                    video.pause();
+                    pauseIcon.style.display = 'none';
+                    playIcon.style.display = 'block';
+                }
+            });
+        }
 
-        // Проверка времени видео для показа модального окна на 55.5 секунде
-        video.addEventListener('timeupdate', function() {
-            if (video.currentTime >= 55.5 && !modalShown) {
-                modalShown = true;
-                // Включаем цикл после первого просмотра
+        // Проверка времени видео для показа модального окна на 55.5 секунде (только для десктопной версии)
+        if (video && modalOverlay && modalSidebar && text1 && text2 && text3) {
+            video.addEventListener('timeupdate', function() {
+                if (video.currentTime >= 55.5 && !modalShown) {
+                    modalShown = true;
+                    // Включаем цикл после первого просмотра
+                    if (!videoPlayedOnce) {
+                        videoPlayedOnce = true;
+                        video.loop = true;
+                    }
+                    // Показываем модальное окно
+                    setTimeout(() => {
+                        openModal();
+                        showText(text1, 100);
+                        showText(text2, 500);
+                        showText(text3, 900);
+                    }, 500);
+                }
+            });
+
+            // Обработка окончания первого просмотра видео (для включения loop)
+            video.addEventListener('ended', function() {
                 if (!videoPlayedOnce) {
                     videoPlayedOnce = true;
                     video.loop = true;
+                    video.play();
                 }
-                // Показываем модальное окно
-                setTimeout(() => {
-                    openModal();
-                    showText(text1, 100);
-                    showText(text2, 500);
-                    showText(text3, 900);
-                }, 500);
-            }
-        });
+            });
+        }
 
-        // Обработка окончания первого просмотра видео (для включения loop)
-        video.addEventListener('ended', function() {
-            if (!videoPlayedOnce) {
-                videoPlayedOnce = true;
-                video.loop = true;
-                video.play();
-            }
-        });
+        // Переключение звука (только для десктопной версии)
+        if (soundToggle && video && soundIcon && mutedIcon) {
+            soundToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (video.muted) {
+                    video.muted = false;
+                    soundIcon.style.display = 'block';
+                    mutedIcon.style.display = 'none';
+                    soundToggle.classList.remove('muted');
+                } else {
+                    video.muted = true;
+                    soundIcon.style.display = 'none';
+                    mutedIcon.style.display = 'block';
+                    soundToggle.classList.add('muted');
+                }
+            });
+        }
 
-        // Переключение звука
-        soundToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            if (video.muted) {
-                video.muted = false;
-                soundIcon.style.display = 'block';
-                mutedIcon.style.display = 'none';
-                soundToggle.classList.remove('muted');
-            } else {
-                video.muted = true;
-                soundIcon.style.display = 'none';
-                mutedIcon.style.display = 'block';
-                soundToggle.classList.add('muted');
-            }
-        });
-
-        // Открытие модального окна
+        // Открытие модального окна (только для десктопной версии)
         function openModal() {
-            isModalOpen = true;
-            modalSidebar.classList.add('visible');
-            modalOverlay.classList.add('visible');
-            modalToggleButton.classList.add('closed');
+            if (modalSidebar && modalOverlay && modalToggleButton) {
+                isModalOpen = true;
+                modalSidebar.classList.add('visible');
+                modalOverlay.classList.add('visible');
+                modalToggleButton.classList.add('closed');
+            }
         }
 
-        // Закрытие модального окна
+        // Закрытие модального окна (только для десктопной версии)
         function closeModal() {
-            isModalOpen = false;
-            modalSidebar.classList.remove('visible');
-            modalOverlay.classList.remove('visible');
-            modalToggleButton.classList.remove('closed');
-            
-            // Показываем кнопку переключения после первого закрытия
-            if (!modalClosedOnce) {
-                modalClosedOnce = true;
-                setTimeout(() => {
-                    modalToggleButton.classList.add('visible');
-                }, 300);
+            if (modalSidebar && modalOverlay && modalToggleButton) {
+                isModalOpen = false;
+                modalSidebar.classList.remove('visible');
+                modalOverlay.classList.remove('visible');
+                modalToggleButton.classList.remove('closed');
+                
+                // Показываем кнопку переключения после первого закрытия
+                if (!modalClosedOnce) {
+                    modalClosedOnce = true;
+                    setTimeout(() => {
+                        if (modalToggleButton) {
+                            modalToggleButton.classList.add('visible');
+                        }
+                    }, 300);
+                }
             }
         }
 
-        // Переключение модального окна
-        modalToggleButton.addEventListener('click', function() {
-            if (isModalOpen) {
+        // Переключение модального окна (только для десктопной версии)
+        if (modalToggleButton) {
+            modalToggleButton.addEventListener('click', function() {
+                if (isModalOpen) {
+                    closeModal();
+                } else {
+                    openModal();
+                }
+            });
+        }
+
+        // Закрытие по кнопке внутри модального окна (только для десктопной версии)
+        if (modalCloseButton) {
+            modalCloseButton.addEventListener('click', function() {
                 closeModal();
-            } else {
-                openModal();
-            }
-        });
+            });
+        }
 
-        // Закрытие по кнопке внутри модального окна
-        modalCloseButton.addEventListener('click', function() {
-            closeModal();
-        });
+        // Закрытие по клику на overlay (только для десктопной версии)
+        if (modalOverlay) {
+            modalOverlay.addEventListener('click', function() {
+                closeModal();
+            });
+        }
 
-        // Закрытие по клику на overlay
-        modalOverlay.addEventListener('click', function() {
-            closeModal();
-        });
+        // Обновление иконки паузы при изменении состояния видео (только для десктопной версии)
+        if (video && pauseIcon && playIcon) {
+            video.addEventListener('play', function() {
+                pauseIcon.style.display = 'block';
+                playIcon.style.display = 'none';
+            });
 
+            video.addEventListener('pause', function() {
+                pauseIcon.style.display = 'none';
+                playIcon.style.display = 'block';
+            });
 
-        // Обновление иконки паузы при изменении состояния видео
-        video.addEventListener('play', function() {
-            pauseIcon.style.display = 'block';
-            playIcon.style.display = 'none';
-        });
-
-        video.addEventListener('pause', function() {
-            pauseIcon.style.display = 'none';
-            playIcon.style.display = 'block';
-        });
-
-        // Обработка ошибок загрузки видео
-        video.addEventListener('error', function(e) {
-            console.error('Ошибка загрузки видео:', e);
-        });
+            // Обработка ошибок загрузки видео
+            video.addEventListener('error', function(e) {
+                console.error('Ошибка загрузки видео:', e);
+            });
+        }
     </script>
 </body>
 </html>

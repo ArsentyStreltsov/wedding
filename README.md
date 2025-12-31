@@ -35,3 +35,5 @@ git push -u origin main
 - Видео файлы исключены из репозитория через `.gitignore`
 
 
+
+

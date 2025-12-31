@@ -34,3 +34,4 @@ git push -u origin main
 - Не забудьте заменить `YOUR_R2_VIDEO_URL_HERE` на реальный URL из Cloudflare R2
 - Видео файлы исключены из репозитория через `.gitignore`
 
+

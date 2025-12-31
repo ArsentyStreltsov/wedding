@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Save the Date</title>
+    <title>Save the Date!</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👩‍❤️‍💋‍👨</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=BBH+Bartle&family=BBH+Hegarty&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
@@ -279,6 +280,11 @@
             transform: rotate(180deg);
         }
 
+        /* Скрыть мобильную версию на десктопе */
+        .mobile-container {
+            display: none;
+        }
+
         .text-block {
             color: #1a1a2e;
             opacity: 0;
@@ -330,6 +336,10 @@
             margin-bottom: 0;
             line-height: 1.6;
             color: #2d2d44;
+        }
+
+        #text3 h2:nth-child(2) {
+            margin-top: 40px;
         }
 
         .telegram-button {
@@ -385,6 +395,315 @@
                 padding: 50px 25px 30px;
             }
         }
+
+        /* Мобильная версия (планшеты и телефоны) */
+        @media (max-width: 1366px) {
+            /* Скрыть десктопные элементы */
+            .video-container,
+            .play-button,
+            .sound-toggle,
+            .pause-toggle,
+            .test-skip-button,
+            .modal-overlay,
+            .modal-toggle-button,
+            .modal-sidebar {
+                display: none !important;
+            }
+
+            body {
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            /* Показать мобильную версию */
+            .mobile-container {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                background: linear-gradient(135deg, rgba(230, 240, 255, 0.98) 0%, rgba(200, 220, 245, 0.98) 100%);
+            }
+
+            .mobile-header {
+                padding: 30px 20px 20px;
+                text-align: center;
+            }
+
+            .mobile-title {
+                font-size: 2.5rem;
+                color: #1a1a2e;
+                margin: 0 0 10px 0;
+            }
+
+            .mobile-subtitle {
+                font-family: 'Quicksand', sans-serif;
+                font-size: 1.3rem;
+                font-weight: 500;
+                letter-spacing: 1px;
+                color: #2d2d44;
+                margin: 0;
+            }
+
+            .mobile-video-wrapper {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+                position: relative;
+            }
+
+            .mobile-video-wrapper video {
+                width: 90%;
+                max-width: 600px;
+                height: auto;
+                display: block;
+                border-radius: 20px;
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            }
+
+            /* Скрыть стандартную кнопку play в controls, так как у нас своя */
+            .mobile-video-wrapper video::-webkit-media-controls-play-button {
+                display: none !important;
+            }
+
+            .mobile-play-button {
+            position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 5;
+                width: 70px;
+                height: 70px;
+            border-radius: 50%;
+                background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+                border: 3px solid rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            }
+
+            .mobile-play-button:hover {
+                transform: translate(-50%, -50%) scale(1.1);
+                background: rgba(255, 255, 255, 1);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            }
+
+            .mobile-play-button.hidden {
+                opacity: 0;
+                pointer-events: none;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+
+            .mobile-play-button svg {
+                width: 30px;
+                height: 30px;
+                fill: #333;
+                margin-left: 3px;
+            }
+
+            .mobile-content {
+                padding: 30px 20px;
+                flex: 1;
+                display: flex;
+                justify-content: center;
+            }
+
+            .mobile-text-block {
+                margin-bottom: 30px;
+                color: #1a1a2e;
+                width: 90%;
+                max-width: 600px;
+            }
+
+            .mobile-text-block:last-child {
+                margin-bottom: 0;
+            }
+
+            .mobile-text-block h2 {
+                font-family: 'Quicksand', sans-serif;
+                font-size: 1.2rem;
+                font-weight: 500;
+                letter-spacing: 1px;
+                margin-bottom: 20px;
+                line-height: 1.6;
+                color: #2d2d44;
+            }
+
+            .mobile-text-block h2:last-of-type {
+                margin-bottom: 0;
+            }
+
+            .mobile-telegram-button {
+                display: block;
+                margin: 30px auto 0;
+                width: fit-content;
+                text-align: center;
+                padding: 15px 30px;
+                background: #0088cc;
+                color: white;
+                text-decoration: none;
+                border-radius: 25px;
+                font-family: 'Quicksand', sans-serif;
+                font-weight: 600;
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+            }
+
+            .mobile-telegram-button:hover {
+                background: #006ba3;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4);
+            }
+        }
+
+        /* Планшеты (iPad Air, iPad Pro) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .mobile-header {
+                padding: 40px 30px 30px;
+            }
+
+            .mobile-title {
+                font-size: 3rem;
+            }
+
+            .mobile-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .mobile-video-wrapper {
+                padding: 30px;
+            }
+
+            .mobile-video-wrapper video {
+                width: 85%;
+                max-width: 800px;
+                border-radius: 25px;
+            }
+
+            .mobile-content {
+                padding: 40px 30px;
+            }
+
+            .mobile-text-block {
+                width: 85%;
+                max-width: 800px;
+            }
+
+            .mobile-text-block h2 {
+                font-size: 1.4rem;
+            }
+
+            .mobile-play-button {
+                width: 80px;
+                height: 80px;
+            }
+
+            .mobile-play-button svg {
+                width: 35px;
+                height: 35px;
+            }
+
+            .mobile-telegram-button {
+                font-size: 1.2rem;
+                padding: 18px 35px;
+            }
+        }
+
+        /* Большие планшеты (iPad Pro 12.9") */
+        @media (min-width: 1025px) and (max-width: 1366px) {
+            .mobile-header {
+                padding: 50px 40px 40px;
+            }
+
+            .mobile-title {
+                font-size: 3.5rem;
+            }
+
+            .mobile-subtitle {
+                font-size: 1.6rem;
+            }
+
+            .mobile-video-wrapper {
+                padding: 40px;
+            }
+
+            .mobile-video-wrapper video {
+                width: 80%;
+                max-width: 900px;
+                border-radius: 25px;
+            }
+
+            .mobile-content {
+                padding: 50px 40px;
+            }
+
+            .mobile-text-block {
+                width: 80%;
+                max-width: 900px;
+            }
+
+            .mobile-text-block h2 {
+                font-size: 1.5rem;
+            }
+
+            .mobile-play-button {
+                width: 90px;
+                height: 90px;
+            }
+
+            .mobile-play-button svg {
+                width: 40px;
+                height: 40px;
+            }
+
+            .mobile-telegram-button {
+                font-size: 1.3rem;
+                padding: 20px 40px;
+            }
+        }
+
+        /* Мобильные телефоны */
+        @media (max-width: 768px) {
+            .mobile-title {
+                font-size: 2rem;
+            }
+
+            .mobile-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .mobile-content {
+                padding: 25px 15px;
+            }
+
+            .mobile-text-block h2 {
+                font-size: 1.1rem;
+            }
+
+            .mobile-video-wrapper {
+                padding: 15px;
+            }
+
+            .mobile-video-wrapper video {
+                width: 92%;
+                border-radius: 15px;
+            }
+
+            .mobile-play-button {
+                width: 60px;
+                height: 60px;
+            }
+
+            .mobile-play-button svg {
+                width: 25px;
+                height: 25px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -401,11 +720,11 @@
     </button>
 
     <button class="sound-toggle muted" id="soundToggle" aria-label="Переключить звук" style="display: none;">
-        <svg id="soundIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: none;">
-            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-        </svg>
-        <svg id="mutedIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+            <svg id="soundIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+            <svg id="mutedIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
         </svg>
     </button>
 
@@ -428,6 +747,32 @@
         </svg>
     </button>
 
+    <!-- Мобильная версия -->
+    <div class="mobile-container">
+        <div class="mobile-header">
+            <h1 class="font-hegarty mobile-title">Save the Date!</h1>
+            <h2 class="mobile-subtitle">или по-другому, мы женимся!</h2>
+        </div>
+        <div class="mobile-video-wrapper">
+            <video id="mobileVideo" playsinline>
+                <source src="https://pub-ba3c79b5eb52452c9d2b9723b757d8d3.r2.dev/%D0%B1%D0%B5%D0%B7.mp4" type="video/mp4">
+            </video>
+            <button class="mobile-play-button" id="mobilePlayButton" aria-label="Воспроизвести видео">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="mobile-content">
+            <div class="mobile-text-block">
+                <h2>Будем вас ждать в ЗАГСе №4 по адресу <a href="https://yandex.ru/maps/-/CLT5yVyW" target="_blank" rel="noopener noreferrer" style="color: #0088cc; text-decoration: underline;">Бутырская улица, 17</a> в 10:45</h2>
+                <h2>Сохраните для нас весь день, ведь после этого мы все вместе поедем в ресторан!</h2>
+                <h2>Мы еще не определились со всеми деталями, но придумали, как будем держать связь! Переходите в наш свадебный телеграмм-бот, где будет публиковаться вся дополнительная информация</h2>
+                <a href="#" class="telegram-button mobile-telegram-button" id="mobileTgButton" target="_blank" rel="noopener noreferrer">Перейти в бота</a>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-sidebar" id="modalSidebar">
         <button class="modal-close-button" id="modalCloseButton" aria-label="Закрыть">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -435,13 +780,11 @@
             </svg>
         </button>
         <div id="text1" class="text-block">
-            <h1 class="font-hegarty">Save the date</h1>
+            <h1 class="font-hegarty">Save the Date</h1>
             <h2>или по-другому, мы женимся!</h2>
         </div>
         <div id="text2" class="text-block">
-            <h2>Будем вас ждать в ЗАГСе №4</h2>
-            <h2>по адресу <a href="https://yandex.ru/maps/-/CLT5yVyW" target="_blank" rel="noopener noreferrer" style="color: #0088cc; text-decoration: underline;">Бутырская улица, 17</a></h2>
-            <h2>в 10:45</h2>
+            <h2>Будем вас ждать в ЗАГСе №4 по адресу <a href="https://yandex.ru/maps/-/CLT5yVyW" target="_blank" rel="noopener noreferrer" style="color: #0088cc; text-decoration: underline;">Бутырская улица, 17</a> в 10:45</h2>
         </div>
         <div id="text3" class="text-block">
             <h2>Сохраните для нас весь день, ведь после этого мы все вместе поедем в ресторан!</h2>
@@ -452,7 +795,8 @@
 
     <script>
         // Замените на реальную ссылку на вашего Telegram бота
-        document.getElementById('tgButton').href = 'https://t.me/your_bot_username';
+        document.getElementById('tgButton').href = 'https://t.me/thebestwedding_bot';
+        document.getElementById('mobileTgButton').href = 'https://t.me/thebestwedding_bot';
 
         const video = document.getElementById('backgroundVideo');
         const playButton = document.getElementById('playButton');
@@ -496,6 +840,33 @@
             mutedIcon.style.display = 'none';
             soundToggle.classList.remove('muted');
         });
+
+        // Мобильная версия - запуск видео
+        const mobileVideo = document.getElementById('mobileVideo');
+        const mobilePlayButton = document.getElementById('mobilePlayButton');
+        
+        if (mobileVideo && mobilePlayButton) {
+            // Изначально controls выключены
+            mobileVideo.controls = false;
+            
+            mobilePlayButton.addEventListener('click', function() {
+                mobileVideo.muted = false;
+                mobileVideo.controls = true; // Включить controls перед запуском
+                mobileVideo.play().then(() => {
+                    mobilePlayButton.classList.add('hidden');
+                }).catch(() => {
+                    // Если не удалось запустить
+                    mobileVideo.controls = false;
+                    mobilePlayButton.classList.remove('hidden');
+                });
+            });
+
+            // Скрыть кнопку play когда видео начинает играть
+            mobileVideo.addEventListener('play', function() {
+                mobilePlayButton.classList.add('hidden');
+                mobileVideo.controls = true; // Убедиться, что controls включены
+            });
+        }
 
         // Переключение паузы/воспроизведения
         pauseToggle.addEventListener('click', function() {

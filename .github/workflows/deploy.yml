@@ -1,0 +1,43 @@
+name: Deploy to Hetzner
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Sync static site
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+        run: |
+          set -euo pipefail
+          ssh-keyscan -H "$SERVER_HOST" >> ~/.ssh/known_hosts
+
+          rsync -avz \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            --exclude 'docs/' \
+            --exclude 'scripts/' \
+            --exclude 'deploy/' \
+            --exclude 'deploy.sh' \
+            --exclude '*.mp4' \
+            --exclude '*.mov' \
+            --exclude '*.avi' \
+            --exclude '*.mkv' \
+            --exclude '.DS_Store' \
+            -e "ssh -o StrictHostKeyChecking=yes" \
+            ./ "${SERVER_USER}@${SERVER_HOST}:/var/www/senya-and-dasha/"
+
+          ssh -o StrictHostKeyChecking=yes "${SERVER_USER}@${SERVER_HOST}" << 'EOF'
+            chown -R www-data:www-data /var/www/senya-and-dasha
+            echo "Deploy successful: $(ls -la /var/www/senya-and-dasha/)"
+          EOF

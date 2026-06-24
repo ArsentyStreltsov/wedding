@@ -1,39 +1,48 @@
 # Wedding Save the Date Website
 
-Сайт-приглашение на свадьбу с видео фоном.
+Сайт-приглашение на свадьбу с видео-фоном.
 
-## Деплой на GitHub Pages
+**Продакшен:** [https://senya-and-dasha.ru](https://senya-and-dasha.ru)
 
-1. Замените `YOUR_R2_VIDEO_URL_HERE` в `index.html` на реальный URL видео из Cloudflare R2
-2. Выполните следующие команды в терминале:
+## Стек
+
+- Статический `index.html`
+- Видео — Cloudflare R2 (публичный URL в HTML)
+- Хостинг — Hetzner VPS + Nginx
+- Автодеплой — GitHub Actions
+
+## Быстрый деплой изменений
 
 ```bash
-cd /Users/arsentystreltsov/Desktop/wedding
-git init
-git add index.html .gitignore README.md
-git commit -m "Initial commit: wedding save the date website"
-git branch -M main
-git remote add origin https://github.com/ArsentyStreltsov/wedding.git
-git push -u origin main
+./deploy.sh "Описание изменений"
 ```
 
-## Настройка Cloudflare Pages
+Push в `main` → GitHub Actions копирует файлы на сервер.
 
-1. В Cloudflare Dashboard перейдите в "Pages"
-2. Нажмите "Create a project" → "Connect to Git"
-3. Выберите ваш GitHub репозиторий `wedding`
-4. Настройки:
-   - Project name: `wedding` (или любое другое)
-   - Production branch: `main`
-   - Build command: (оставьте пустым)
-   - Build output directory: (оставьте пустым)
-5. Нажмите "Save and Deploy"
+## Первичная настройка / миграция с Cloudflare
+
+Инструкции лежат локально в `docs/` (папка в `.gitignore`, на GitHub не попадает).
+
+## GitHub Secrets (Settings → Secrets → Actions)
+
+| Secret | Описание |
+| ------ | -------- |
+| `SSH_PRIVATE_KEY` | Приватный SSH-ключ для деплоя (целиком, с `BEGIN`/`END`) |
+| `SERVER_HOST` | IP вашего VPS |
+| `SERVER_USER` | `root` (или другой пользователь с доступом к `/var/www/`) |
+
+## Локальная разработка
+
+Откройте `index.html` в браузере или через любой локальный HTTP-сервер:
+
+```bash
+python3 -m http.server 8080
+# http://localhost:8080
+```
+
+Видео грузится с R2 — нужен интернет.
 
 ## Важно
 
-- Не забудьте заменить `YOUR_R2_VIDEO_URL_HERE` на реальный URL из Cloudflare R2
-- Видео файлы исключены из репозитория через `.gitignore`
-
-
-
-
+- Видеофайлы (`*.mp4`) в git не попадают — они на R2
+- `_redirects` не используется (это было для Cloudflare Pages; на VPS — Nginx `try_files`)
